@@ -10,17 +10,21 @@ body {
   font-family: 'Courier New', monospace;
   background: linear-gradient(to bottom right, #2c2c2c, #1a1a1a);
   color: #f5f5f5;
-  overflow: hidden;
   text-align: center;
   position: relative;
 }
 
+body.light-mode {
+  background: linear-gradient(to bottom right, #fde2e4, #fad2e1);
+  color: #333;
+}
+
 section {
   display: none;
-  height: 100vh;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 100%;
 }
 section.active { display: flex; }
 
@@ -31,6 +35,12 @@ input {
   border: 1px solid #888;
   background: #444;
   color: #f5f5f5;
+}
+
+body.light-mode input {
+  background: white;
+  color: #333;
+  border: 1px solid #ccc;
 }
 
 button {
@@ -46,7 +56,6 @@ button {
 #errorMessage { color: red; margin-top: 10px; opacity: 0; }
 
 #catchable-image {
-  position: absolute;
   width: 40vw;
   max-width: 180px;
   height: auto;
@@ -58,7 +67,6 @@ button {
   font-size: 4vw;
   white-space: pre-line;
   max-width: 90%;
-  max-height: 50vh;
   margin: 20px auto;
   position: relative;
   z-index: 20;
@@ -136,7 +144,7 @@ themeToggle.addEventListener('click', () => {
   document.body.classList.toggle('light-mode');
 });
 
-// Password check
+// Password
 function checkPassword() {
   const password = document.getElementById('passwordInput').value.trim();
   const correctPassword = "me gusta tu";
@@ -148,7 +156,7 @@ function checkPassword() {
   } else { errorMessage.style.opacity="1"; }
 }
 
-// Catch image random movement (slower)
+// Catch image movement slower
 function moveImageRandomly() {
   const newX = Math.random() * (window.innerWidth - image.offsetWidth);
   const newY = Math.random() * (window.innerHeight - image.offsetHeight);
@@ -209,7 +217,7 @@ function startTimer(){
   },1000);
 }
 
-// Floating hearts (lighter)
+// Floating hearts lighter
 const hearts=[
 "https://github.com/Mk0123811819/aya/blob/main/aya_ds/images/aya_1.png?raw=true",
 "https://github.com/Mk0123811819/aya/blob/main/aya_ds/images/aya_2.png?raw=true",
@@ -221,7 +229,7 @@ const hearts=[
 ];
 
 function createFloating(){
-  if(Math.random()>0.6) return; // fewer hearts per interval
+  if(Math.random()>0.85) return; // very few hearts
   const idx=Math.floor(Math.random()*hearts.length);
   const src=hearts[idx];
   const el=document.createElement("img");
@@ -234,7 +242,7 @@ function createFloating(){
   el.style.opacity=0.3+Math.random()*0.2;
   document.body.appendChild(el);
 
-  let speed=0.5+Math.random()*1.5; // slower fall
+  let speed=0.5+Math.random();
   const fall=setInterval(()=>{
     let top=parseFloat(el.style.top);
     if(top>window.innerHeight){
@@ -248,7 +256,7 @@ function createFloating(){
 
 function startMainPage(){
   typeWriter();
-  setInterval(createFloating,500);
+  setInterval(createFloating,1500); // fewer hearts
   setInterval(changeName,2000);
   startTimer();
 }
